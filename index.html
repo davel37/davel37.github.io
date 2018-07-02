@@ -52,13 +52,26 @@
             height: 90%;
             width: 100%;
         }
-        
-        i {
-    margin-left: 100px;
-    font-size: 30px;
-    height: 30px;
-    vertical-align: middle; }
 
+        i {
+            margin-left: 100px;
+            font-size: 30px;
+            height: 30px;
+            vertical-align: middle;
+        }
+        .fa-sun{
+            font-size:60px;
+            color:yellow;
+            
+        }
+        .fa-cloud{
+            font-size:60px;
+            color:grey;
+        }
+        .fa-umbrella{
+             font-size:60px;
+              color:green;
+        }
     </style>
 
 </head>
@@ -68,9 +81,10 @@
         <div class="header"><span>Weather Results App</span></div>
         <div id='results'></div>
         <div id='weather'></div>
-          <div  id = 'center'> <i class="fa fa-sun" style="font-size:60px;color:yellow;"></i></div>
+        <div id ='forecastimage'></div>
        
-       
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
@@ -79,6 +93,11 @@
     <script>
         $(document).ready(function() {
 
+            const IMAGES = {
+                sunny: "fa fa-sun",
+                cloudy: "fa fa-cloud",
+                rain: "fa fa-umbrella"
+            }
 
             const getGeoLocation = new Promise(function(resolve, reject) {
 
@@ -87,18 +106,12 @@
                         lat: res.coords.latitude,
                         long: res.coords.longitude
                     };
-                    // our code
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(resolve, reject);
-                        resolve(geolocation);
-                    } else reject('There is an error!!');
+
+                    resolve(geolocation);
+                    // } else reject('There is an error!!');
                 });
             });
-            //case ok
-            // resolve(dataOk);
 
-            //case wrong
-            // reject(err);
 
 
 
@@ -115,17 +128,17 @@
                         const city = data.query.results.channel.location.city;
                         const country = data.query.results.channel.location.country;
                         const todayTemperature = data.query.results.channel.item.condition.temp;
-                        const todayForecast = data.query.results.channel.item.condition.text;
+                        //  const todayForecast = data.query.results.channel.item.condition.text;
+                        const todayForecast = 'rain';
 
                         $('#results').html("The location is " + city + ', ' + country);
                         $('#weather').html("The forecast is " + todayTemperature + 'ºF and the weather is ' + todayForecast);
-                       
+                        $('#forecastimage').addClass(IMAGES[todayForecast.toLowerCase()]);
                     });
             });
         });
-
     </script>
 
-</body>
+</body>'
 
 </html>
